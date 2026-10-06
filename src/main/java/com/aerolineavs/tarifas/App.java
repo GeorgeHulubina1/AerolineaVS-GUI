@@ -1,9 +1,10 @@
 package com.aerolineavs.tarifas;
 
+import javax.swing.SwingUtilities;
 import java.util.Scanner;
 
 /**
- * Interfaz CLI para cálculo de tarifa.
+ * Punto de entrada de la aplicación.
  */
 public final class App {
 
@@ -11,11 +12,23 @@ public final class App {
     }
 
     /**
-     * Punto de entrada de la CLI.
+     * Punto de entrada principal.
      *
-     * @param args argumentos no usados
+     * @param args usa --cli para ejecutar la versión de consola
      */
     public static void main(String[] args) {
+        if (args.length > 0 && "--cli".equalsIgnoreCase(args[0])) {
+            ejecutarCli();
+            return;
+        }
+
+        SwingUtilities.invokeLater(() -> {
+            TarifaFrame frame = new TarifaFrame();
+            frame.setVisible(true);
+        });
+    }
+
+    private static void ejecutarCli() {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("=== Evaluador de Tarifas Aerolínea ===");
 
